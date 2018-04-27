@@ -14,7 +14,7 @@ use Yii;
 
 class MenuBreadcrumbs extends Menu
 {
-    public $parentActiveIfItemHidden = true;        //子项隐藏后是否激活父项。
+    public $parentActiveIfItemHidden = true;        //子项隐藏后是否激活父项。(主要是在哪里unset掉子项，是在判断激活前还是判断激活后)
     public $breadcrumbs = [];
     public $breadcrumbs_cache_key = 'breadcrumbs';
     public $title;
@@ -23,6 +23,7 @@ class MenuBreadcrumbs extends Menu
     public function run()
     {
         parent::run();
+        
         //反转数组并存到cache里面 以待备用。
         $cache = Yii::$app->cache;
         $cache->set($this->breadcrumbs_cache_key, array_reverse($this->breadcrumbs));
@@ -58,13 +59,15 @@ class MenuBreadcrumbs extends Menu
                 if ($this->activateParents && $hasActiveChild || $this->activateItems && ($isActiveItem = $this->isItemActive($item))) {
                     $active = $items[$i]['active'] = true;
                     //设置breadcrumbs
-                    $breadcrumb = [
-                        'label' => $item['label'],
-                        'url' => $item['url'],
-                    ];
-                    $this->breadcrumbs[] = $breadcrumb;
+                    if(!isset($item['displayInBreadcrumbs']) || $item['displayInBreadcrumbs']){
+                        $breadcrumb = [
+                            'label' => $item['label'],
+                            'url' => isset($item['url']) ? $item['url'] : null,
+                        ];
+                        $this->breadcrumbs[] = $breadcrumb;
+                    }
                     //设置标题
-                    if(isset($isActiveItem) && $isActiveItem){
+                    if (isset($isActiveItem) && $isActiveItem) {
                         $this->title = $item['label'];
                     }
                 } else {
@@ -81,5 +84,4 @@ class MenuBreadcrumbs extends Menu
         }
         return array_values($items);
     }
-
 }
