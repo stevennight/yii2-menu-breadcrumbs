@@ -23,7 +23,7 @@ class MenuBreadcrumbs extends Menu
     public function run()
     {
         parent::run();
-        
+
         //反转数组并存到cache里面 以待备用。
         $cache = Yii::$app->cache;
         $cache->set($this->breadcrumbs_cache_key, array_reverse($this->breadcrumbs));
