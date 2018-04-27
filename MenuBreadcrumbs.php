@@ -24,10 +24,10 @@ class MenuBreadcrumbs extends Menu
     {
         parent::run();
 
-        //反转数组并存到cache里面 以待备用。
-        $cache = Yii::$app->cache;
-        $cache->set($this->breadcrumbs_cache_key, array_reverse($this->breadcrumbs));
-        $cache->set($this->title_cache_key, $this->title);
+        //反转数组并存到session里面  cache应该会在并发时出现问题
+        $session = Yii::$app->session;
+        $session->set($this->breadcrumbs_cache_key, array_reverse($this->breadcrumbs));
+        $session->set($this->title_cache_key, $this->title);
     }
 
 
