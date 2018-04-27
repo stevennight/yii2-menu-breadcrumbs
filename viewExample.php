@@ -14,6 +14,7 @@ $menu = stevennight\menu_breadcrumbs\MenuBreadcrumbs::widget([
         [
             'label' => '权限管理',
             'icon' => 'sticky-note',
+            'openRbac' => true,                 //Use Rbac.
             'displayInBreadcrumbs' => false,    //Hidden this node in breadcrumbs. 在面包屑中隐藏该节点。
             'items' => [
                 [
