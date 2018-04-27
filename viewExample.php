@@ -47,9 +47,13 @@ $menu = stevennight\menu_breadcrumbs\MenuBreadcrumbs::widget([
 $session = Yii::$app->session;
 if (!isset($this->params['customerBreadcrumbs']) || $this->params['customerBreadcrumbs']) {
     $breadcrumbs = $session->get('aaaaaa');
-    $this->params['breadcrumbs'] = $breadcrumbs;
+    if(!empty($breadcrumbs)){
+        $this->params['breadcrumbs'] = $breadcrumbs;
+    }
 }
 if (!isset($this->params['customerTitle']) || $this->params['customerTitle']) {
     $title = $session->get('pageTitle');
-    $this->title = $title;
+    if(!empty($title)){
+        $this->title = $title;
+    }
 }

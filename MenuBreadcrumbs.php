@@ -14,14 +14,43 @@ use Yii;
 
 class MenuBreadcrumbs extends Menu
 {
+    public $openRbac = false;                       //是否进行RBAC处理，隐藏无权限的子项。
     public $parentActiveIfItemHidden = true;        //子项隐藏后是否激活父项。(主要是在哪里unset掉子项，是在判断激活前还是判断激活后)
     public $breadcrumbs = [];
     public $breadcrumbs_cache_key = 'breadcrumbs';
     public $title;
     public $title_cache_key = 'pageTitle';
+    public $menu_cache_key = 'menu_';
 
     public function run()
     {
+        if($this->openRbac){
+            $cache = Yii::$app->cache;
+            $userId = Yii::$app->user->id;
+            $cache_key = $this->menu_cache_key . $userId;
+            $cache_key_global = $this->menu_cache_key . 0; //全局(用于储存完整的menu)
+            $menu_items_cache = $cache->get($cache_key_global);
+            $menuUpdate = false;
+            if (!$menu_items_cache) {
+                //没有设置时
+                $menuUpdate = true;
+                $cache->set($cache_key_global, $this->items);
+            } else {
+                if (serialize($this->items) != serialize($menu_items_cache)) {
+                    $menuUpdate = true;
+                    $cache->set($cache_key_global, $this->items);
+                }
+            }
+
+            if ($menuUpdate || !($menu = $cache->get($cache_key))) {
+                //没有缓存 获取有权限的菜单
+                $menu = $this->_getMenu($this->items);
+                $cache->set($cache_key, $menu);
+            }
+            //重新设置菜单items。
+            $this->items = $menu;
+        }
+
         parent::run();
 
         //反转数组并存到session里面  cache应该会在并发时出现问题
@@ -83,5 +112,37 @@ class MenuBreadcrumbs extends Menu
             }
         }
         return array_values($items);
+    }
+
+    private function _getMenu($items)
+    {
+        if (empty($items)) {
+            return $items;
+        }
+
+        self::_checkAccess($items);
+        return $items;
+    }
+
+    private function _checkAccess(&$items)
+    {
+        foreach ($items as $key => &$item) {
+            if (isset($item['items'])) {
+                self::_checkAccess($item['items']);
+                if (count($item['items']) == 0) {
+                    unset($items[$key]);
+                }
+            } else {
+                if (isset($item['url'])) {
+                    $admin = Yii::$app->user;
+//                    $url = $item['url'][0];
+                    $url = rtrim($item['url'][0], '\/');//substr($item['url'][0], 1);
+                    if (!$admin->can($url)) {
+                        //没有权限 删除菜单。
+                        unset($items[$key]);
+                    }
+                }
+            }
+        }
     }
 }
