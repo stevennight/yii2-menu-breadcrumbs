@@ -15,5 +15,10 @@
         "yiisoft/yii2-redis": "^2.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "dmstr/yii2-adminlte-asset": "^2.1"
+    },
+    "autoload":{
+        "psr-4":{
+            "stevennight\\menu_breadcrumbs\\":"src"
+        }
     }
 }
