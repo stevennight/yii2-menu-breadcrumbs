@@ -92,6 +92,10 @@ class MenuBreadcrumbs extends Menu
                             'label' => $item['label'],
                             'url' => isset($item['url']) ? $item['url'] : null,
                         ];
+                        //当前页面的面包屑去掉url，不可点击。
+                        if (isset($isActiveItem) && $isActiveItem) {
+                            unset($breadcrumb['url']);
+                        }
                         $this->breadcrumbs[] = $breadcrumb;
                     }
                     //设置标题
