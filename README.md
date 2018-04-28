@@ -1,5 +1,6 @@
 # yii2-menu-breadcrumbs
 
+[![GitHub version](https://badge.fury.io/gh/stevennight%2Fyii2-menu-breadcrumbs.svg)](https://badge.fury.io/gh/stevennight%2Fyii2-menu-breadcrumbs)
 [![Latest Stable Version](https://poser.pugx.org/stevennight/menu-breadcrumbs-package/v/stable)](https://packagist.org/packages/stevennight/menu-breadcrumbs-package)
 [![Total Downloads](https://poser.pugx.org/stevennight/menu-breadcrumbs-package/downloads)](https://packagist.org/packages/stevennight/menu-breadcrumbs-package)
 [![Latest Unstable Version](https://poser.pugx.org/stevennight/menu-breadcrumbs-package/v/unstable)](https://packagist.org/packages/stevennight/menu-breadcrumbs-package)

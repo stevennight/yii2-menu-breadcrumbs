@@ -63,10 +63,10 @@ class MenuBreadcrumbs extends Menu
     protected function normalizeItems($items, &$active)
     {
         foreach ($items as $i => $item) {
-            if (!$this->parentActiveIfItemHidden && isset($item['visible']) && !$item['visible']) {
+            /*if (!$this->parentActiveIfItemHidden && isset($item['visible']) && !$item['visible']) {
                 unset($items[$i]);
                 continue;
-            }
+            }*/
             if (!isset($item['label'])) {
                 $item['label'] = '';
             }
@@ -86,7 +86,6 @@ class MenuBreadcrumbs extends Menu
             }
             if (!isset($item['active'])) {
                 if ($this->activateParents && $hasActiveChild || $this->activateItems && ($isActiveItem = $this->isItemActive($item))) {
-                    $active = $items[$i]['active'] = true;
                     //设置breadcrumbs
                     if(!isset($item['displayInBreadcrumbs']) || $item['displayInBreadcrumbs']){
                         $breadcrumb = [
@@ -99,13 +98,21 @@ class MenuBreadcrumbs extends Menu
                     if (isset($isActiveItem) && $isActiveItem) {
                         $this->title = $item['label'];
                     }
+                    //todo:: $active will affect generation of breadcrumbs, remove "disable parent active if active item is hidden" feature now. $active会影响breadcrumbs的生成，因此，暂时去掉不激活父级的选择....
+                    /*if (!$this->parentActiveIfItemHidden && isset($item['visible']) && !$item['visible']) {
+                        unset($items[$i]);
+                        continue;
+                    }*/
+
+                    //必须在上述操作之后激活active = true;否则就会激活父级。
+                    $active = $items[$i]['active'] = true;
                 } else {
                     $items[$i]['active'] = false;
                 }
             } elseif ($item['active']) {
                 $active = true;
             }
-            //visible设置为不显示，因此unset掉。(激活父级，最前面的将不激活父级。)
+            //visible设置为不显示，因此unset掉。(激活父级)
             if (isset($item['visible']) && !$item['visible']) {
                 unset($items[$i]);
                 continue;
@@ -136,7 +143,7 @@ class MenuBreadcrumbs extends Menu
                 if (isset($item['url'])) {
                     $admin = Yii::$app->user;
 //                    $url = $item['url'][0];
-                    $url = rtrim($item['url'][0], '\/');//substr($item['url'][0], 1);
+                    $url = rtrim($item['url'][0], '\/');
                     if (!$admin->can($url)) {
                         //没有权限 删除菜单。
                         unset($items[$key]);
