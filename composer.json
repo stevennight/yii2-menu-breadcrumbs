@@ -18,7 +18,7 @@
     },
     "autoload":{
         "psr-4":{
-            "stevennight\\menu_breadcrumbs\\":"src"
+            "stevennight\\menu_breadcrumbs\\":"./"
         }
     }
 }
