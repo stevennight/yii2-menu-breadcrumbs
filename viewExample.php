@@ -47,13 +47,15 @@ $menu = stevennight\menu_breadcrumbs\MenuBreadcrumbs::widget([
 ]);
 $session = Yii::$app->session;
 if (!isset($this->params['customerBreadcrumbs']) || !$this->params['customerBreadcrumbs']) {
-    $breadcrumbs = $session->get('aaaaaa');
+    $breadcrumbs = $session->get('aaaaaa');         //default key is breadcrumbs, but set 'aaaaaa' in above config here. 默认键为breadcrumbs，但是此处上面的配置中设置为'aaaaaa'
     if(!empty($breadcrumbs)){
         $this->params['breadcrumbs'] = $breadcrumbs;
+    }else{
+        $this->params['breadcrumbs'] = [];
     }
 }
 if (!isset($this->params['customerTitle']) || !$this->params['customerTitle']) {
-    $title = $session->get('pageTitle');
+    $title = $session->get('pageTitle');            //This is a default key here. 这个是默认的键
     if(!empty($title)){
         $this->title = $title;
     }
