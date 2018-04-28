@@ -1,6 +1,8 @@
 {
     "name": "stevennight/menu-breadcrumbs-package",
-    "description": "Auto Generate the Breadcrumbs By Menu Setting.",
+    "description": "Automatic Generate the Breadcrumbs By Menu Setting.",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","menu","breadcrumbs"],
     "license": "MIT",
     "authors": [
         {
@@ -18,7 +20,12 @@
     },
     "autoload":{
         "psr-4":{
-            "stevennight\\menu_breadcrumbs\\":"./"
+            "stevennight\\menu_breadcrumbs\\":""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "master": "1.0.x-dev"
         }
     }
 }
