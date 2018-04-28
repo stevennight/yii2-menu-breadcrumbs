@@ -1,5 +1,11 @@
 # yii2-menu-breadcrumbs
 
+[![Latest Stable Version](https://poser.pugx.org/stevennight/menu-breadcrumbs-package/v/stable)](https://packagist.org/packages/stevennight/menu-breadcrumbs-package)
+[![Total Downloads](https://poser.pugx.org/stevennight/menu-breadcrumbs-package/downloads)](https://packagist.org/packages/stevennight/menu-breadcrumbs-package)
+[![Latest Unstable Version](https://poser.pugx.org/stevennight/menu-breadcrumbs-package/v/unstable)](https://packagist.org/packages/stevennight/menu-breadcrumbs-package)
+[![License](https://poser.pugx.org/stevennight/menu-breadcrumbs-package/license)](https://packagist.org/packages/stevennight/menu-breadcrumbs-package)
+[![composer.lock](https://poser.pugx.org/stevennight/menu-breadcrumbs-package/composerlock)](https://packagist.org/packages/stevennight/menu-breadcrumbs-package)
+
 Automatic generate the breadcrumbs with the menu setting.And try to optimizate the menu plugin.
 
 **Test in dmstr's yii2 adminLTE asset bundle and only for it now, because this plugin extends from dmstr/menu...**
